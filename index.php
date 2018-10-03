@@ -14,25 +14,36 @@
         <div class="cadre">
         <div class="row">
             <div class="col-md-1">
-                <a href="#" src="medias/retou.jpg"></a>
+                <a href="" >
                 <img src="images/retou.jpg" width="50" height="50" alt="">
+                </a>
             </div>
             <div class="col-md-5 col-md-offset-2"></div>
     
             <div class="col-md-1">
+            <a href="">
                 <img src="images/sup.jpg" width="50" height="50" alt="">
+                </a>
             </div>
             <div class="col-md-1">
+            <a href="">
                 <img src="images/new fi.png" width="50" height="50" alt="">
+                </a>
             </div>
             <div class="col-md-1">
+            <a href="">
                 <img src="images/new folder.jpg" width="50" height="50" alt="">
+                </a>
             </div>
             <div class="col-md-1">
+            <a href="">
                 <img src="images/tele.png" width="50" height="50" alt="">
+                </a>
             </div>
             <div class="col-md-1">
+            <a href="">
                 <img src="images/up.jpg" width="50" height="50" alt="">
+                </a>
             </div>
 
    
@@ -45,18 +56,14 @@
                 <div class="col-md-1"> 
                     
                 <?php
-
                     $folder = "";
-
                     if(isset($_GET['folder'])) {
                         $folder = "C:/wamp/www/" . $_GET['folder'] . "/";
                     }
                     else {
                         $folder = "C:/wamp/www/";
                     }
-
                     test($folder);
-
                     function test($folder_path) {
                         echo '<ul>';
                         if($dossier = opendir($folder_path)) {
