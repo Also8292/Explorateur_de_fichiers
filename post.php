@@ -24,8 +24,8 @@ function test($folder_path) {
                     if(isset($_GET['folder'])) {
                         ?>
                         <a href="index.php?folder=<?= $_GET['folder']  . '/' . $fichier ?>" class="folder_style">
-                            <img src="public/images/icone_dossier.png" alt="" width="50" height="50">
-                            <?= $fichier ?>
+                            <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
+                            <p style="font-size: 14px;"><?= $fichier ?></p>
                         </a>
                         <?php
                     }
@@ -33,15 +33,20 @@ function test($folder_path) {
                     else {
                         ?>
                         <a href="index.php?folder=<?= $fichier ?>">
-                            <img src="public/images/icone_dossier.png" alt="" width="50" height="50">
-                            <?= $fichier ?>
+                            <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
+                            <p style="font-size: 14px;"><?= $fichier ?></p>
                         </a>
                         <?php
                     }
                 }
                 else {
-                        
-                    echo '<li>"' . $fichier . '"</li>';
+                    ?>
+
+                        <img src="public/images/file.png" alt="" width="40" height="40">
+                        <p style="font-size: 14px;"><?= $fichier ?></p>
+                    
+                    <?php  
+                    //echo '<li>"' . $fichier . '"</li>';
                 }
             }
         }
@@ -60,12 +65,9 @@ function create_folder($folderName) {
         mkdir($folder + $folderName, 0777, true);
     }
     else {
-        echo 'file (' . dirname($folder + $folderName) . ') exist';
+        echo 'file already exist';
     }
 }
 
-function hello() {
-    echo 'Hello world !!!';
-}
 
 ?>
