@@ -13,7 +13,7 @@
     <title>FILE EXPLORER</title>
     
 </head>
-<body>
+<body style="width: 100%; height: 100%">
     <div class="container-fluid">
         <div class="cadre">
             <div class="row">
@@ -51,22 +51,13 @@
             </div>
         </div>
         <div class="cadre1"> 
-            <div class="row">
-                <div class="col-md-1"> 
-                    <?php
-                        require_once 'post.php';
-                        show_folders();
-                        
-                        $nom = "ALSO";
-                    ?>
+            <div class="row container">
+                <?php
+                    require_once 'post.php';
+                    show_folders();
                     
-                    {{ nom }}
-
-                </div>
-                <div class="col-md-2" id="trait"></div>
-                <div class="col-md-8"> 
-                    <img src="public/images/dossier.jpg" width="50" height="50" alt="">
-                </div>
+                    $nom = "ALSO";
+                ?>
             </div>
         </div>
     </div>  

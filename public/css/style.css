@@ -1,3 +1,4 @@
+
 .cadre{
     border: 5px double lightgray ;
     height: 60px;
@@ -7,7 +8,6 @@
     border: 5px double lightgray ;
     height: 500px;
     width: 1335px;
-
 }
 #trait{
     border-right: 5px double lightgray ;

@@ -16,35 +16,38 @@ function show_folders() {
 }
 
 function test($folder_path) {
-    echo '<ul>';
     if($dossier = opendir($folder_path)) {
         while(false !== $fichier = readdir($dossier)) {
             if($fichier != '.' && $fichier != "..") {
                 if(is_dir($folder_path . '' . $fichier)) {
                     if(isset($_GET['folder'])) {
                         ?>
-                        <a href="index.php?folder=<?= $_GET['folder']  . '/' . $fichier ?>" class="folder_style">
-                            <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
-                            <p style="font-size: 14px;"><?= $fichier ?></p>
-                        </a>
+                        <div class="col-md-2">
+                            <a href="index.php?folder=<?= $_GET['folder']  . '/' . $fichier ?>" class="folder_style">
+                                <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
+                                <p style="font-size: 14px;"><?= $fichier ?></p>
+                            </a>
+                        </div>
                         <?php
                     }
 
                     else {
                         ?>
-                        <a href="index.php?folder=<?= $fichier ?>">
-                            <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
-                            <p style="font-size: 14px;"><?= $fichier ?></p>
-                        </a>
+                        <div class="col-md-2">
+                            <a href="index.php?folder=<?= $fichier ?>">
+                                <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
+                                <p style="font-size: 14px;"><?= $fichier ?></p>
+                            </a>
+                        </div>
                         <?php
                     }
                 }
                 else {
                     ?>
-
-                        <img src="public/images/file.png" alt="" width="40" height="40">
-                        <p style="font-size: 14px;"><?= $fichier ?></p>
-                    
+                        <div class="col-md-2">
+                            <img src="public/images/file.png" alt="" width="40" height="40">
+                            <p style="font-size: 14px;"><?= $fichier ?></p>
+                        </div>
                     <?php  
                     //echo '<li>"' . $fichier . '"</li>';
                 }
@@ -52,7 +55,6 @@ function test($folder_path) {
         }
         closedir($dossier);
     }
-    echo '</ul>';
 }
 
 
