@@ -20,11 +20,28 @@ function test($folder_path) {
     if($dossier = opendir($folder_path)) {
         while(false !== $fichier = readdir($dossier)) {
             if($fichier != '.' && $fichier != "..") {
-                if(isset($_GET['folder'])) {
-                    echo '<li><a href="index.php?folder=' . $_GET['folder'] . '/' . $fichier . '">' . $fichier . '</a></li>';
+                if(is_dir($folder_path . '' . $fichier)) {
+                    if(isset($_GET['folder'])) {
+                        ?>
+                        <a href="index.php?folder=<?= $_GET['folder']  . '/' . $fichier ?>" class="folder_style">
+                            <img src="public/images/icone_dossier.png" alt="" width="50" height="50">
+                            <?= $fichier ?>
+                        </a>
+                        <?php
+                    }
+
+                    else {
+                        ?>
+                        <a href="index.php?folder=<?= $fichier ?>">
+                            <img src="public/images/icone_dossier.png" alt="" width="50" height="50">
+                            <?= $fichier ?>
+                        </a>
+                        <?php
+                    }
                 }
                 else {
-                    echo '<li><a href="index.php?folder='. $fichier .'">' . $fichier . '</a></li>';
+                        
+                    echo '<li>"' . $fichier . '"</li>';
                 }
             }
         }
@@ -45,6 +62,10 @@ function create_folder($folderName) {
     else {
         echo 'file (' . dirname($folder + $folderName) . ') exist';
     }
+}
+
+function hello() {
+    echo 'Hello world !!!';
 }
 
 ?>
