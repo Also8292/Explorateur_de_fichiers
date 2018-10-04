@@ -3,24 +3,33 @@
 /**
  * show folders and files
  */
-function show_folders() {
+function show_folders($root_folder) {
     $folder = "";
     if(isset($_GET['folder'])) {
-        $folder = "C:/wamp/www/" . $_GET['folder'] . "/";
+        $folder = $root_folder . '' . $_GET['folder'] . "/";
     }
     else {
-        $folder = "C:/wamp/www/";
+        $folder = $root_folder;
     }
 
-    test($folder);                    
+    test($folder, $root_folder);                    
 }
 
-function test($folder_path) {
+function test($folder_path, $root_folder) {
     if($dossier = opendir($folder_path)) {
         ?>
 
         <div style="width: 100%; background-color: #c1f8f5; margin-bottom: 10px">
-            <?= $folder_path ?>
+            <?php
+            
+                if($folder_path == $root_folder) {
+                    echo 'root/';
+                }
+                else {
+                    echo str_replace($root_folder,"root/", $folder_path);
+                }
+
+            ?>
         </div>
 
         <?php
@@ -28,38 +37,91 @@ function test($folder_path) {
 
         while(false !== $fichier = readdir($dossier)) {
             if($fichier != '.' && $fichier != "..") {
+                ?>
+
+                <tr style="width: 100%">
+
+                <?php
                 if(is_dir($folder_path . '' . $fichier)) {
                     if(isset($_GET['folder'])) {
                         ?>
-                        <div class="col-md-2 file_zone">
+                        <td class="file_zone">
                             <a href="index.php?folder=<?= $_GET['folder']  . '/' . $fichier ?>" class="folder_style">
                                 <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
                                 <p style="font-size: 14px;"><?= $fichier ?></p>
                             </a>
-                        </div>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img src="public/images/edit.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/rename.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/copy.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/delete.png" alt="" width="30" height="30">
+                            </a>
+                        </td>
                         <?php
                     }
 
                     else {
                         ?>
-                        <div class="col-md-2 file_zone">
-                            <a href="index.php?folder=<?= $fichier ?>">
-                                <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
-                                <p style="font-size: 14px;"><?= $fichier ?></p>
-                            </a>
-                        </div>
+                            <td>
+                                <a href="index.php?folder=<?= $fichier ?>">
+                                    <img src="public/images/icone_dossier.png" alt="" width="30" height="30">
+                                    <p style="font-size: 14px;"><?= $fichier ?></p>
+                                </a>
+                            </td>
+                            <td  style="height: 100%">
+                                <a href="">
+                                    <img src="public/images/edit.png" alt="" width="30" height="30">
+                                </a>
+                                <a href="">
+                                    <img src="public/images/rename.png" alt="" width="30" height="30">
+                                </a>
+                                <a href="">
+                                    <img src="public/images/copy.png" alt="" width="30" height="30">
+                                </a>
+                                <a href="">
+                                    <img src="public/images/delete.png" alt="" width="30" height="30">
+                                </a>
+                            </td>
                         <?php
                     }
                 }
                 else {
                     ?>
-                        <div class="col-md-2 file_zone">
+                        <td>
                             <img src="public/images/file.png" alt="" width="40" height="40">
                             <p style="font-size: 14px;"><?= $fichier ?></p>
-                        </div>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img src="public/images/edit.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/rename.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/copy.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="">
+                                <img src="public/images/delete.png" alt="" width="30" height="30">
+                            </a>
+                        </td>
                     <?php  
                     //echo '<li>"' . $fichier . '"</li>';
                 }
+                ?>
+
+                </tr>
+                
+                <?php
+                
             }
         }
         closedir($dossier);
