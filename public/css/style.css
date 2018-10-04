@@ -18,3 +18,7 @@
 .folder_style {
     margin-bottom: 10px;
 }
+
+.file_zone:hover {
+    background-color: #c1f8f5;
+}
