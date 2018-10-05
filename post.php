@@ -51,17 +51,17 @@ function test($folder_path, $root_folder) {
                                 <p style="font-size: 14px;"><?= $fichier ?></p>
                             </a>
                         </td>
-                        <td>
-                            <a href="">
+                        <td class="action_btn">
+                            <!--<a href="actions/action.php?action=editer" title="Editer">
                                 <img src="public/images/edit.png" alt="" width="30" height="30">
-                            </a>
-                            <a href="">
+                            </a>-->
+                            <a href="actions/action.php?action=renommer" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="">
+                            <a href="actions/action.php?action=copier" title="Copier">
                                 <img src="public/images/copy.png" alt="" width="30" height="30">
                             </a>
-                            <a href="">
+                            <a href="actions/action.php?action=supprimer" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
@@ -76,17 +76,19 @@ function test($folder_path, $root_folder) {
                                     <p style="font-size: 14px;"><?= $fichier ?></p>
                                 </a>
                             </td>
-                            <td  style="height: 100%">
-                                <a href="">
+                            <td class="action_btn">
+                            <!--
+                                <a href="actions/action.php?action=editer" title="Editer">
                                     <img src="public/images/edit.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="">
+                                -->
+                                <a href="actions/action.php?action=renommer" title="Renommer">
                                     <img src="public/images/rename.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="">
+                                <a href="actions/action.php?action=copier" title="Copier">
                                     <img src="public/images/copy.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="">
+                                <a href="actions/action.php?action=supprimer" title="Supprimer">
                                     <img src="public/images/delete.png" alt="" width="30" height="30">
                                 </a>
                             </td>
@@ -99,17 +101,17 @@ function test($folder_path, $root_folder) {
                             <img src="public/images/file.png" alt="" width="40" height="40">
                             <p style="font-size: 14px;"><?= $fichier ?></p>
                         </td>
-                        <td>
-                            <a href="">
+                        <td class="action_btn">
+                            <a href="actions/action.php?action=editer" title="Editer">
                                 <img src="public/images/edit.png" alt="" width="30" height="30">
                             </a>
-                            <a href="">
+                            <a href="actions/action.php?action=renommer" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="">
+                            <a href="actions/action.php?action=copier" title="Copier">
                                 <img src="public/images/copy.png" alt="" width="30" height="30">
                             </a>
-                            <a href="">
+                            <a href="actions/action.php?action=supprimer" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
