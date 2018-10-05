@@ -145,4 +145,32 @@ function create_folder($folderName) {
 }
 
 
+/**
+ * get parent folder url
+ * @param string current url
+ * @return string parent folder url
+ */
+function back_url($current_url) {
+    //if(verify_folder($folder)) {
+        $pos = strrpos($current_url, "/");
+        $current_folder = substr($current_url, $pos);
+        $parent_folder_url = str_replace($current_folder, "", $current_url);
+
+        return $parent_folder_url;
+    //}
+    // else {
+    //     return "";
+    // }
+}
+
+function verify_folder($folder) {
+    if($folder != 'root/') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
 ?>
