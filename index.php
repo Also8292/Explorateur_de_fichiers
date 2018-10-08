@@ -1,5 +1,6 @@
 <?php
     require 'vendor/autoload.php';
+    $url = "C:/wamp/www/";
 ?>
 
 <!DOCTYPE html>
@@ -36,14 +37,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="actions/action.php?action=creer_dossier&folder=<?php if(isset($_GET['folder'])){ echo $url . '' . $_GET['folder']; } else { echo $url; } ?>">Nouveau dossier <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="actions/action.php?action=importer&folder=<?php if(isset($_GET['folder'])){ echo $url . '' . $_GET['folder']; } else { echo $url; } ?>">Importer</a>
             </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
@@ -62,7 +63,7 @@
             <?php
 
                 require_once 'post.php';
-                show_folders("C:/wamp/www/");
+                show_folders($url);
 
             ?>
         </table>
@@ -71,6 +72,7 @@
 
     <!-- script files -->
     <script src="public/js/jQuery.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
 
 </body>
 </html>

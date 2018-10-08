@@ -102,7 +102,7 @@ function test($folder_path, $root_folder) {
                             <p style="font-size: 14px;"><?= $fichier ?></p>
                         </td>
                         <td class="action_btn">
-                            <a href="actions/action.php?action=editer" title="Editer">
+                            <a href="actions/action.php?action=editer&folder=" title="Editer">
                                 <img src="public/images/edit.png" alt="" width="30" height="30">
                             </a>
                             <a href="actions/action.php?action=renommer" title="Renommer">
@@ -136,8 +136,9 @@ function test($folder_path, $root_folder) {
  * @param string folder name
  */
 function create_folder($folderName) {
-    if(!file_exists($folder + $folderName)) {
-        mkdir($folder + $folderName, 0777, true);
+    if(!file_exists($folderName)) {
+        mkdir($folderName, 0777, true);
+        echo 'congratulation';
     }
     else {
         echo 'file already exist';
@@ -151,26 +152,25 @@ function create_folder($folderName) {
  * @return string parent folder url
  */
 function back_url($current_url) {
-    //if(verify_folder($folder)) {
+ 
         $pos = strrpos($current_url, "/");
         $current_folder = substr($current_url, $pos);
         $parent_folder_url = str_replace($current_folder, "", $current_url);
 
         return $parent_folder_url;
-    //}
-    // else {
-    //     return "";
-    // }
 }
 
+
+
 function verify_folder($folder) {
-    if($folder != 'root/') {
+    if($folder != 'root') {
         return true;
     }
     else {
         return false;
     }
 }
+
 
 
 ?>
