@@ -6,15 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/style.css">
-    <title>Nouveau dossier</title>
+    <title><?= $_GET['action'] ?></title>
 </head>
 
-
+<body>
+    
 
 <?php
     require '../post.php';
 
     $current = $_GET['folder'];
+    $redirect = str_replace("C:/wamp/www/", "", $current);
     $back = "";
     if(isset($_POST['name_folder'])) {
         $back = str_replace("C:/wamp/www/", "", back_url($current . '/' . $_POST['name_folder']));
@@ -64,7 +66,44 @@
     }
 
     else if($action == 'importer') {
-        echo 'importer';
+        // echo 'importer';
+        ?>
+        <h1 style="text-align: center;">Importer dossier ou fichier</h1>
+        <form class="container" action="" method="post" enctype="multipart/form-data" style="text-align: center; width: 350px; margin-top: 100px; margin-bottom: 100px">
+           
+            <div class="form-group">
+                <input type="file" name="folder_upload" id="folder_upload">
+            </div>
+            
+            <button type="submit" name="btn_submit" class="btn btn-primary" id="create_btn" style="float: left;">Importer</button>
+            <button type="reset" class="btn btn-danger" id="create_btn" style="float: right;">Annuler</button>
+        </form>
+
+        <?php
+        if (isset($_POST['btn_submit'])){
+    
+            $fichier = $_FILES['folder_upload']['name'];
+            $taille_max = 2097152;
+            $taille = filesize($_FILES['folder_upload']['tmp_name']);
+            $extensions = ['.png', '.jpg', '.pdf', '.html', '.css', '.php'];
+            $extension = strrchr($fichier, '.');
+        
+            if (!in_array($extension, $extensions)){
+                $error = '<div class="alert">Type de fichier non pris en charge</div>';
+            }
+            if ($taille > $taille_max){
+                $error = '<div class="alert">Fichier trop volumineux : taille max => 2Mo</div>';
+            }
+            if (!isset($error)){
+                $fichier = preg_replace('/([^.a-z0-9]+)/', '.', $fichier);
+                move_uploaded_file($_FILES['folder_upload']['tmp_name'], $_GET['folder'] . '/'. $fichier);
+                header('Location: ../index.php?folder=' . $redirect);
+            } else {
+                echo $error;
+            }
+        }
+
+        
     }
 
     else if($action == 'renommer') {
@@ -99,4 +138,9 @@
     }
     
 ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../public/js/jQuery.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
 
+</body>
+</html>

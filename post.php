@@ -173,4 +173,12 @@ function verify_folder($folder) {
 
 
 
+/**
+ * upload file
+ * 
+ */
+function upload() {
+    
+}
+
 ?>
