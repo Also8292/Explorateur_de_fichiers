@@ -14,16 +14,16 @@
 
 <?php
     require '../post.php';
-
+    
     $current = $_GET['folder'];
-    $redirect = str_replace("C:/wamp/www/", "", $current);
+    $redirect = str_replace(root_folder_path(), "", $current);
     $back = "";
     if(isset($_POST['name_folder'])) {
-        $back = str_replace("C:/wamp/www/", "", back_url($current . '/' . $_POST['name_folder']));
+        $back = str_replace(root_folder_path(), "", back_url($current . '/' . $_POST['name_folder']));
         
     }
     else {
-        $back = str_replace("C:/wamp/www/", "", $current);
+        $back = str_replace(root_folder_path(), "", $current);
     }
     ?>
     <a href="../index.php?folder=<?= $back ?>">
@@ -55,7 +55,7 @@
 
            // echo '<br>';
 
-            $back_url = str_replace("C:/wamp/www/", "", back_url($current_folder . '/' . $_POST['name_folder']));
+            $back_url = str_replace(root_folder_path(), "", back_url($current_folder . '/' . $_POST['name_folder']));
 
             header('Location: ../index.php?folder=' . $back_url);
             
@@ -130,9 +130,19 @@
         <?php
     }
 
-    else if($action == 'editer') {
-        
+    else if($action == 'telecharger') {
+        if(isset($_GET['folder'])) {
+            download($_GET['folder']);
+
+            if(is_dir($_GET['folder'])) {
+                header('Location: ../index.php?folder=' . $back);
+            }
+            else {
+                echo 'Une erreur s\'est produite';
+            }
+        }
     }
+
     else {
 
     }

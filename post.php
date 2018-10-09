@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * root folder path
+ */
+function root_folder_path() {
+    return "C:/wamp/www/";
+}
+
+/**
  * show folders and files
  */
 function show_folders($root_folder) {
@@ -12,10 +19,10 @@ function show_folders($root_folder) {
         $folder = $root_folder;
     }
 
-    test($folder, $root_folder);                    
+    show_file_function($folder, $root_folder);                    
 }
 
-function test($folder_path, $root_folder) {
+function show_file_function($folder_path, $root_folder) {
     if($dossier = opendir($folder_path)) {
         ?>
 
@@ -52,16 +59,16 @@ function test($folder_path, $root_folder) {
                             </a>
                         </td>
                         <td class="action_btn">
-                            <!--<a href="actions/action.php?action=editer" title="Editer">
-                                <img src="public/images/edit.png" alt="" width="30" height="30">
-                            </a>-->
-                            <a href="actions/action.php?action=renommer" title="Renommer">
+                            <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
+                                <img src="public/images/download.png" alt="" width="30" height="30">
+                            </a>
+                            <a href="actions/action.php?action=renommer&folder=" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=copier" title="Copier">
+                            <a href="actions/action.php?action=copier&folder=" title="Copier">
                                 <img src="public/images/copy.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=supprimer" title="Supprimer">
+                            <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
@@ -77,18 +84,16 @@ function test($folder_path, $root_folder) {
                                 </a>
                             </td>
                             <td class="action_btn">
-                            <!--
-                                <a href="actions/action.php?action=editer" title="Editer">
-                                    <img src="public/images/edit.png" alt="" width="30" height="30">
+                                <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
+                                    <img src="public/images/download.png" alt="" width="30" height="30">
                                 </a>
-                                -->
-                                <a href="actions/action.php?action=renommer" title="Renommer">
+                                <a href="actions/action.php?action=renommer&folder=" title="Renommer">
                                     <img src="public/images/rename.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="actions/action.php?action=copier" title="Copier">
+                                <a href="actions/action.php?action=copier&folder=" title="Copier">
                                     <img src="public/images/copy.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="actions/action.php?action=supprimer" title="Supprimer">
+                                <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
                                     <img src="public/images/delete.png" alt="" width="30" height="30">
                                 </a>
                             </td>
@@ -102,16 +107,16 @@ function test($folder_path, $root_folder) {
                             <p style="font-size: 14px;"><?= $fichier ?></p>
                         </td>
                         <td class="action_btn">
-                            <a href="actions/action.php?action=editer&folder=" title="Editer">
-                                <img src="public/images/edit.png" alt="" width="30" height="30">
+                            <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
+                                <img src="public/images/download.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=renommer" title="Renommer">
+                            <a href="actions/action.php?action=renommer&folder=" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=copier" title="Copier">
+                            <a href="actions/action.php?action=copier&folder=" title="Copier">
                                 <img src="public/images/copy.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=supprimer" title="Supprimer">
+                            <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
@@ -174,11 +179,72 @@ function verify_folder($folder) {
 
 
 /**
- * upload file
- * 
+ * download function
+ * @param string folder or file path
  */
-function upload() {
-    
+
+function download($dir) {
+
+    if(is_dir($dir)) {
+        $zip_file = 'file.zip';
+
+        // Get real path for our folder
+        $rootPath = realpath($dir);
+
+        // Initialize archive object
+        $zip = new ZipArchive();
+        $zip->open($zip_file, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        // Create recursive directory iterator
+        /** @var SplFileInfo[] $files */
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($rootPath),
+            RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($files as $name => $file)
+        {
+            // Skip directories (they would be added automatically)
+            if (!$file->isDir())
+            {
+                // Get real and relative path for current file
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($rootPath) + 1);
+
+                // Add current file to archive
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        // Zip archive will be created only after closing object
+        $zip->close();
+
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename='.basename($zip_file));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($zip_file));
+        readfile($zip_file);
+    }
+
+    else if(is_file($dir)) {
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename='.basename($dir));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($dir));
+        ob_clean();
+        ob_end_flush();
+        readfile($dir);
+    }
 }
 
 ?>

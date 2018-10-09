@@ -1,6 +1,7 @@
 <?php
     require 'vendor/autoload.php';
-    $url = "C:/wamp/www/";
+    require_once 'post.php';
+    $url = root_folder_path();
 ?>
 
 <!DOCTYPE html>
