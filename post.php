@@ -97,8 +97,10 @@ function show_file_function($folder_path, $root_folder) {
                 else {
                     ?>
                         <td>
-                            <img src="public/images/file.png" alt="" width="40" height="40">
-                            <p style="font-size: 14px;"><?= $fichier ?></p>
+                            <a href="actions/action.php?action=read_file&folder=<?= $folder_path . '' . $fichier ?>" target="_blank">
+                                <img src="public/images/file.png" alt="" width="40" height="40">
+                                <p style="font-size: 14px;"><?= $fichier ?></p>
+                            </a>
                         </td>
                         <td class="action_btn">
                             <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
@@ -223,7 +225,9 @@ function verify_folder($folder) {
 function download($dir) {
 
     if(is_dir($dir)) {
-        $zip_file = 'file.zip';
+        $dir_path = pathinfo($dir);
+
+        $zip_file = $dir_path['filename'] . '.zip';
 
         // Get real path for our folder
         $rootPath = realpath($dir);
@@ -281,6 +285,44 @@ function download($dir) {
         ob_clean();
         ob_end_flush();
         readfile($dir);
+    }
+}
+
+
+/**
+ * read file function
+ * @param string file path
+ */
+function read_file($file_path) {
+    
+    $file_info = pathinfo($file_path);
+
+    if($file_info['extension'] == "pdf") {
+        $filename = 'pdf_label_'.$order['id'].'.pdf';
+
+        $file = $path;
+        $filename = $filename;
+        
+        header('Content-type: application/pdf');
+        header('Content-Disposition: inline; filename="' . $filename . '"');
+        header('Content-Transfer-Encoding: binary');
+        header('Accept-Ranges: bytes');
+        readfile($file);
+    }
+    else if($file_info['extension'] == "php") {
+        show_source($file_info['filename'] . "." . $file_info['extension']);
+    }
+    else if($file_info['extension'] == "html") {
+        echo file_get_contents($file_path);
+    }
+    else if($file_info['extension'] == "jpg" || $file_info['extension'] == "png" || $file_info['extension'] == "gif") {
+        $remoteImage = $file_path;
+        $imginfo = getimagesize($remoteImage);
+        header("Content-type: {$imginfo['mime']}");
+        readfile($remoteImage);
+    }
+    else {
+        echo file_get_contents($file_path);
     }
 }
 

@@ -26,7 +26,7 @@
         $back = str_replace(root_folder_path(), "", $current);
     }
     ?>
-    <a href="../index.php?folder=<?= $back ?>">
+    <a href="../index.php?folder=<?= $back ?>" id="back_btn">
         <img src="../public/images/back.png" alt="retour" width="30" height="30">
     </a>
     <?php
@@ -60,9 +60,6 @@
             header('Location: ../index.php?folder=' . $back_url);
             
         }
-    }
-    else if($action == 'editer') {
-        echo $_GET['action'];
     }
 
     else if($action == 'importer') {
@@ -137,10 +134,6 @@
         }
     }
 
-    else if($action == 'copier') {
-        
-    }
-
     else if($action == 'supprimer') {
         if(isset($_GET['folder'])) {
             delete_folder($_GET['folder']);
@@ -163,6 +156,19 @@
                 echo 'Une erreur s\'est produite';
             }
         }
+    }
+
+    else if($action == "read_file") {
+        ?>
+        
+        <style>
+            #back_btn {
+                display: none;
+            }
+        </style>
+        
+        <?php
+        read_file($_GET['folder']);
     }
     
 ?>
