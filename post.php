@@ -62,13 +62,10 @@ function show_file_function($folder_path, $root_folder) {
                             <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
                                 <img src="public/images/download.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=renommer&folder=" title="Renommer">
+                            <a href="actions/action.php?action=renommer&folder=<?= $folder_path . '' . $fichier ?>" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=copier&folder=" title="Copier">
-                                <img src="public/images/copy.png" alt="" width="30" height="30">
-                            </a>
-                            <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
+                            <a href="actions/action.php?action=supprimer&folder=<?= $folder_path . '' . $fichier ?>" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
@@ -87,13 +84,10 @@ function show_file_function($folder_path, $root_folder) {
                                 <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
                                     <img src="public/images/download.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="actions/action.php?action=renommer&folder=" title="Renommer">
+                                <a href="actions/action.php?action=renommer&folder=<?= $folder_path . '' . $fichier ?>" title="Renommer">
                                     <img src="public/images/rename.png" alt="" width="30" height="30">
                                 </a>
-                                <a href="actions/action.php?action=copier&folder=" title="Copier">
-                                    <img src="public/images/copy.png" alt="" width="30" height="30">
-                                </a>
-                                <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
+                                <a href="actions/action.php?action=supprimer&folder=<?= $folder_path . '' . $fichier ?>" title="Supprimer">
                                     <img src="public/images/delete.png" alt="" width="30" height="30">
                                 </a>
                             </td>
@@ -110,18 +104,14 @@ function show_file_function($folder_path, $root_folder) {
                             <a href="actions/action.php?action=telecharger&folder=<?= $folder_path . '' . $fichier ?>" title="telecharger">
                                 <img src="public/images/download.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=renommer&folder=" title="Renommer">
+                            <a href="actions/action.php?action=renommer&folder=<?= $folder_path . '' . $fichier ?>" title="Renommer">
                                 <img src="public/images/rename.png" alt="" width="30" height="30">
                             </a>
-                            <a href="actions/action.php?action=copier&folder=" title="Copier">
-                                <img src="public/images/copy.png" alt="" width="30" height="30">
-                            </a>
-                            <a href="actions/action.php?action=supprimer&folder=" title="Supprimer">
+                            <a href="actions/action.php?action=supprimer&folder=<?= $folder_path . '' . $fichier ?>" title="Supprimer">
                                 <img src="public/images/delete.png" alt="" width="30" height="30">
                             </a>
                         </td>
                     <?php  
-                    //echo '<li>"' . $fichier . '"</li>';
                 }
                 ?>
 
@@ -149,6 +139,53 @@ function create_folder($folderName) {
         echo 'file already exist';
     }
 }
+
+
+
+/**
+ * delete folder or file
+ * @param string folder name
+ */
+function delete_folder($folderName) {
+    ?>
+    
+    <script>
+        var confirm = confirm('Voulez-vous vraiment supprimer ?');
+        if(confirm) {
+            <?php
+                if(is_dir($folderName)) {
+                    rmdir($folderName);
+                }
+
+                else if(is_file($folderName)) {
+                    unlink($folderName);
+                }
+                
+            ?>
+        }
+        else {
+            <?php
+                //header('Location: ');  
+                echo 'Annuler'; 
+            ?>
+        }
+    </script>
+    
+    <?php
+}
+
+
+
+/**
+ * rename folder or file function
+ * @param string oldName, newName
+ * 
+ */
+function rename_folder($oldName, $newName) {
+    rename($oldName, $newName);
+}
+
+
 
 
 /**

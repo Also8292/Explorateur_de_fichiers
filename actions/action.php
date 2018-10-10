@@ -107,7 +107,34 @@
     }
 
     else if($action == 'renommer') {
-        echo 'renommer';
+        ?>
+            <form action="" method="post">
+                <input type="text" name="newName" id="newName" placeholder="Entrez le nouveau nom">
+                <input type="submit" name="submit">
+            </form>
+        <?php
+        if(isset($_POST['submit'])) {
+
+            if(is_dir($_GET['folder'])) {
+                $file_info = pathinfo($_GET['folder']);
+                $path = str_replace($file_info['filename'], "", $_GET['folder']);
+                $parent_folder = str_replace(root_folder_path(), "", $path);
+
+                rename_folder($_GET['folder'], $path . "" . $_POST['newName']);
+                header('Location: ../index.php?folder=' . $parent_folder);
+            }
+            else if(is_file($_GET['folder'])) {
+                $file_info = pathinfo($_GET['folder']);
+                $path = str_replace($file_info['filename'] . '.' . $file_info['extension'], "", $_GET['folder']);
+                $parent_folder = str_replace(root_folder_path(), "", $path);
+                $extension = $file_info['extension'];
+                // echo $file_info['extension'] . '<br>';
+                // echo $file_info['filename'];
+                rename_folder($_GET['folder'], $path . "" . $_POST['newName'] . "." . $extension);
+
+                header('Location: ../index.php?folder=' . $parent_folder);
+            }
+        }
     }
 
     else if($action == 'copier') {
@@ -115,19 +142,14 @@
     }
 
     else if($action == 'supprimer') {
-        ?>
-        
-        <script>
-            var x = confirm('Voulez-vous vraiment supprimer ce fichier');
-            if(x) {
-                alert('Le fichier a été supprimé') ; 
-            }
-            else {
-                alert('Annuler');
-            }
-        </script>
-        
-        <?php
+        if(isset($_GET['folder'])) {
+            delete_folder($_GET['folder']);
+            //echo 'GOOD';
+            header('Location: ../index.php?folder=' . $back_url);
+        }
+        else {
+            echo 'Une erreur est survenue';
+        }
     }
 
     else if($action == 'telecharger') {
@@ -141,10 +163,6 @@
                 echo 'Une erreur s\'est produite';
             }
         }
-    }
-
-    else {
-
     }
     
 ?>
